@@ -222,7 +222,7 @@ class Limit_Image_Upload {
 	}
 	
 	/**
-	 * Remove tabs on media uploader, if reached limit
+	 * Set active tab, if reached limit
 	 * 
 	 * @since   1.0.0
 	 * @param   array  $tabs
