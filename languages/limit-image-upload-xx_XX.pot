@@ -1,21 +1,68 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: PlaceHolder\n"
+"Project-Id-Version: Limit Image Upload v1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-06-22 09:33:52+0000\n"
-"Last-Translator: none\n"
+"PO-Revision-Date: 2012-06-25 08:43:43+0000\n"
+"Last-Translator: admin <frank@bueltge.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Poedit-Language: English\n"
-"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
 "X-Poedit-Basepath: ../\n"
 "X-Poedit-Bookmarks: \n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes"
+
+#. translators: plugin header field 'Name'
+#: limit-image-upload.php:0
+#@ limit-image-upload
+msgid "Limit Image Upload"
+msgstr "Uploads einschränken"
+
+#. translators: plugin header field 'PluginURI'
+#. translators: plugin header field 'AuthorURI'
+#: limit-image-upload.php:0
+#@ limit-image-upload
+msgid "http://bueltge.de"
+msgstr ""
+
+#. translators: plugin header field 'Description'
+#: limit-image-upload.php:0
+#@ limit-image-upload
+msgid "Limit the number of uploads from images on posts"
+msgstr "Beschränkt den Upload von Dateien zu Artikeln"
+
+#: classes/class-limit_image_upload.php:138
+#@ limit-image-upload
+msgid "Unexpected Error:"
+msgstr "Unerwarteter Fehler:"
+
+#: classes/class-limit_image_upload.php:148
+#, php-format
+#@ limit-image-upload
+msgid "Sorry, you cannot upload more than %d images."
+msgstr "Entschuldigung, du kannst keine Weiteren Uploads tätigen, es sind nur %d zulässig."
+
+#. translators: plugin header field 'Author'
+#: limit-image-upload.php:0
+#@ limit-image-upload
+msgid "Frank Bültge, Ralf Albert"
+msgstr ""
+
+#. translators: plugin header field 'Version'
+#: limit-image-upload.php:0
+#@ limit-image-upload
+msgid "1.0.1"
+msgstr ""
+
+#: classes/class-limit_image_upload.php:234
+#@ limit-image-upload
+msgid "Accepted MIME types:"
+msgstr "Akzeptierte MIME Typen:"
 

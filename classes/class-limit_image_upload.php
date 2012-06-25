@@ -32,12 +32,12 @@ class Limit_Image_Upload {
 	 public static $post_types = array();
 	 
 	 /**
-	  * 
 	  * Array with allowed mime types
 	  * 
-	  * @since	0.2
-	  * @var	array
-	  * @see	http://wpengineer.com/2369/restrict-mime-types-on-wordpress-media-upload/
+	  * @since  0.2
+	  * @var    array
+	  * @see    http://wpengineer.com/2369/restrict-mime-types-on-wordpress-media-upload/
+	  * @see    http://wpengineer.com/1668/add-file-types-for-mediathek/
 	  */
 	 static public $mime_types = array();
 	
@@ -56,20 +56,20 @@ class Limit_Image_Upload {
 	 * @since   0.1
 	 * @return  void
 	 */
-	public function __construct( $args = array() ){
+	public function __construct( $args = array() ) {
 		
 		/*
 		 * get the basic settings
-		 * (int)	max_uploads	Number of maximum uploads. Default is 4
-		 * (array)	post_types	Post types to exclude from upload restrictions
-		 * (array)	mime_types	Allowed mime types
-		 * (string)	textdomain	Textdomain to be use in this class  
+		 * (int)     max_uploads  Number of maximum uploads. Default is 4
+		 * (array)   post_types  Post types to exclude from upload restrictions
+		 * (array)   mime_types  Allowed mime types
+		 * (string)  textdomain  Textdomain to be use in this class  
 		 */
 		$def_args = array(
-			'max_uploads'	=> self::$limit_upload,
-			'post_types'	=> self::$post_types,
-			'mime_types'	=> self::$mime_types,
-			'textdomain'	=> self::$textdomain,
+			'max_uploads' => self::$limit_upload,
+			'post_types'  => self::$post_types,
+			'mime_types'  => self::$mime_types,
+			'textdomain'  => self::$textdomain,
 		);
 		
 		$args = array_merge( $def_args, $args );
@@ -85,10 +85,10 @@ class Limit_Image_Upload {
 		 * an empty array means, all mime types are allowed
 		 * 
 		 * e.g.:
-		 * 		$mime_types = array(
-		 *			'pdf' => 'application/pdf',
-		 *			'doc|docx' => 'application/msword',
-		 *		);
+		 *   $mime_types = array(
+		 *       'pdf' => 'application/pdf',
+		 *       'doc|docx' => 'application/msword',
+		 *   );
 		 *
 		 */
 		self::$mime_types = $args['mime_types'];
@@ -96,28 +96,26 @@ class Limit_Image_Upload {
 		// Textdomain
 		self::$textdomain = $args['textdomain'];
 		
-		
 		$filters = array(
 			// handle upload
-			'wp_handle_upload_prefilter'	=> 'limit_handle_upload_prefilter',
+			'wp_handle_upload_prefilter' => 'limit_handle_upload_prefilter',
 			// handel tabs
-		 	'media_upload_tabs'				=> 'control_media_upload_tabs',
+		 	'media_upload_tabs'          => 'control_media_upload_tabs',
 			// set new active tab
-			'media_upload_default_tab'		=> 'set_media_upload_default_tab',
+			'media_upload_default_tab'   => 'set_media_upload_default_tab',
 			// restrict mime types
-			'upload_mimes'					=> 'restrict_mime_types',
+			'upload_mimes'               => 'restrict_mime_types',
 		);
 		
 		foreach( $filters as $hook => $method )
 			add_filter( $hook, array( &$this, $method ) );
 				
 		// show a notification on restricted mime types
-		if( ! empty( self::$mime_types ) )
+		if ( ! empty( self::$mime_types ) )
 			add_action( 'post-upload-ui', array( &$this, 'restrict_mime_types_hint' ) );
-			
+		
 		// cleanup
 		unset( $def_args, $args, $filters );
-		
 	}
 	
 	/**
@@ -222,7 +220,6 @@ class Limit_Image_Upload {
 		
 		// an empty array means, all mime types are allowed
 		return self::$mime_types;
-		
 	}
 	
 	/**
@@ -232,10 +229,10 @@ class Limit_Image_Upload {
 	 * @since 0.2
 	 */
 	public function restrict_mime_types_hint(){
-
-		_e( 'Accepted MIME types: ', self::$textdomain );
-		echo '<strong>' . implode( ', ', array_flip( self::$mime_types ) ) . '<strong>';
 		
+		echo '<br />';
+		_e( 'Accepted MIME types:', self::$textdomain );
+		echo ' <strong>' . implode( ', ', array_flip( self::$mime_types ) ) . '</strong>';
 	}
 	
 } // end class

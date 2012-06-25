@@ -9,7 +9,6 @@
  * Author:      Frank Bültge, Ralf Albert
  * Author URI:  http://bueltge.de
  * License:     GPLv3
- *
  * 
  * 
  * License:
@@ -41,43 +40,106 @@ if ( ! function_exists( 'add_filter' ) ) {
 	exit;
 }
 
-// load this plugin only on backend. change this if you need to load it either in frontend
-if (
-	function_exists( 'add_filter' )
-		&&
-	is_admin()
-){
-
-	if( ! class_exists( 'Fetch_Plugin_Header' ) )
-		require_once 'classes/class-fetch_plugin_header.php';
-		
-	if( ! class_exists( 'Limit_Image_Upload' ) )
-		require_once 'classes/class-limit_image_upload.php';
-		
-	add_action( 'plugins_loaded', 'start_limit_image_upload' );
+class Init_Limit_Upload {
 	
-	function start_limit_image_upload(){
+	/**
+	 * Instance holder
+	 *
+	 * @since   0.1
+	 * @var     NULL
+	 */
+	private static $instance = NULL;
+	
+	/**
+	 * Constructor
+	 * 
+	 * @return  void
+	 */
+	public function __construct() {
+		
+		// load this plugin only on backend
+		// change this if you need to load it either in frontend
+		if ( ! is_admin() )
+			return;
+		
+		$this->load_classes();
+		$this->start_limit_image_upload();
+	}
+	
+	/**
+	 * Method for ensuring that only one instance of this object is used
+	 *
+	 * @since   0.1
+	 * @return  Custom_Loop_Widget
+	 */
+	public static function get_instance() {
+		
+		if ( ! self::$instance )
+			self::$instance = new self;
+		
+		return self::$instance;
+	}
+	
+	/**
+	 * Returns array of features, also
+	 * Scans the plugins subfolder "/classes"
+	 *
+	 * @since   0.1
+	 * @return  void
+	 */
+	protected function load_classes() {
+		
+		// Get dir
+		$handle = opendir( dirname( __FILE__ ) . '/classes' );
+		if ( ! $handle )
+			return;
+			
+		// Loop through directory files
+		while ( FALSE != ( $plugin = readdir( $handle ) ) ) {
+	
+			// Is this file for us?
+			if ( '.php' == substr( $plugin, -4 ) ) {
+				
+				// Include module file
+				require_once dirname( __FILE__ ) . '/classes/' . $plugin;
+			}
+		}
+		closedir( $handle );
+	}
+	
+	/**
+	 * Init the plugin
+	 * 
+	 * @see     Mimetypes Image: http://www.fileformat.info/info/mimetype/image/index.htm
+	 * @return  void
+	 */
+	public function start_limit_image_upload() {
 		
 		$plugin_header = new Fetch_Plugin_Header( __FILE__ );
 		
 		$args = array(
-			
-			'max_uploads'		=> 4,
-			
-			'post_types'	=> array(),
-
-			'mime_types'	=> array(
-								'pdf' => 'application/pdf',
-								'doc|docx' => 'application/msword',
+			'max_uploads' => 4,
+			'post_types'  => array(),
+			'mime_types'  => array(
+				'pdf'      => 'application/pdf',
+				'doc|docx' => 'application/msword',
+				'png'      => 'image/png',
+				'jpe'      => 'image/jpeg',
+				'jpeg'     => 'image/jpeg',
+				'jpg'      => 'image/jpeg',
+				'bmp'      => 'image/bmp',
+				'gif'      => 'image/gif',
+				'tif'      => 'image/tiff',
+				'tiff'     => 'image/tiff',
 			),
-			
-			'textdomain'	=> $plugin_header->get_textdomain(),
+			'textdomain'  => $plugin_header->get_textdomain(),
 		);
 		
 		unset( $plugin_header );
-		
 		new Limit_Image_Upload( $args );
-		
 	}
 	
-}
+} // end cass
+
+if ( function_exists( 'add_filter' ) && class_exists( 'Init_Limit_Upload' ) )
+	add_action( 'plugins_loaded', array( 'Init_Limit_Upload', 'get_instance' ) );

@@ -13,31 +13,30 @@
  * @link       http://wordpress.com
  */
 
-class Fetch_Plugin_Header
-{
+class Fetch_Plugin_Header {
 	
 	/**
 	 * 
 	 * Array for error messages
 	 * 
-	 * @since	0.1
-	 * @var		array
+	 * @since  0.1
+	 * @var    array
 	 */
 	public $errors = array();
 	
 	/**
 	 * Array for the plugin header
 	 * 
-	 * @since	0.1
-	 * @var		array
+	 * @since  0.1
+	 * @var    array
 	 */
 	public $plugin_data = array(); 
 	
 	/**
 	 * Absolute path to the file with plugin header
 	 * 
-	 * @since	0.1
-	 * @var		string
+	 * @since  0.1
+	 * @var    string
 	 */
 	public $absfile = '';
 	
@@ -45,31 +44,32 @@ class Fetch_Plugin_Header
 	 * 
 	 * Constructor initialize the plugin data array
 	 * 
-	 * @since	0.1
-	 * @param	string	$absfile	[optional] Absolute path to the file with plugin header. If set, the plugin header will be read
+	 * @since  0.1
+	 * @param  string  $absfile  [optional] Absolute path to the file with plugin header. If set, the plugin header will be read
 	 */
-	public function __construct( $absfile = '' ){
+	public function __construct( $absfile = '' ) {
 		
-		if( ! empty( $absfile ) && is_string( $absfile ) )
+		if ( ! empty( $absfile ) && is_string( $absfile ) )
 			$this->absfile = $absfile;
 			
-		if( empty( $this->plugin_data ) && ! empty( $this->absfile ) )
+		if ( empty( $this->plugin_data ) && ! empty( $this->absfile ) )
 			$this->get_plugin_header( $this->absfile );
 		
+		$this->load_plugin_textdomain();
 	}
 	
 	/**
 	 * 
 	 * Check if the internal value $absfile was set correctly
 	 * 
-	 * @since	0.1
-	 * @return	TRUE|NULL	TRUE on success, NULL on error
+	 * @since   0.1
+	 * @return  TRUE|NULL	TRUE on success, NULL on error
 	 */
-	protected function check_absfile(){
+	protected function check_absfile() {
 		
-		if( empty( $this->absfile ) && ! is_string( $this->absfile ) ){
+		if ( empty( $this->absfile ) && ! is_string( $this->absfile ) ){
 			
-			array_push( $this->errors[], 'No filepath was set' );
+			array_push( $this->errors[], 'No filepath was set.' );
 			return NULL;
 			
 		} else {
@@ -77,19 +77,18 @@ class Fetch_Plugin_Header
 			return TRUE;
 			
 		}
-		
 	}
 	
 	/**
 	 * 
 	 * Checks if the internal array $plugin_data is not empty. If it is, try to read the plugin header
 	 * 
-	 * @since	0.1
-	 * @return	TRUE|NULL	TRUE on success, NULL on error
+	 * @since   0.1
+	 * @return  TRUE|NULL	TRUE on success, NULL on error
 	 */
-	protected function check_plugin_data(){
+	protected function check_plugin_data() {
 		
-		if( empty( $this->plugin_data ) ){
+		if ( empty( $this->plugin_data ) ) {
 			
 			// returns TRUE (on success) or NULL (on error)
 			return $this->get_plugin_header();
@@ -99,7 +98,6 @@ class Fetch_Plugin_Header
 			return TRUE;
 			
 		}
-		
 	}
 	
 	
@@ -107,12 +105,12 @@ class Fetch_Plugin_Header
 	 * Get a value from the plugin header
 	 *
 	 * @since   0.1
-	 * @return	TRUE|NULL	TRUE on success, NULL on error
+	 * @return  TRUE|NULL	TRUE on success, NULL on error
 	 * @uses    get_plugin_data, ABSPATH
 	 */
-	public function get_plugin_header(){
+	public function get_plugin_header() {
 		
-		if( TRUE !== $this->check_absfile() )
+		if ( TRUE !== $this->check_absfile() )
 			return NULL;
 		
 		if ( ! function_exists( 'get_plugin_data' ) )
@@ -120,7 +118,7 @@ class Fetch_Plugin_Header
 	
 		$this->plugin_data = get_plugin_data( $this->absfile );
 		
-		if( empty( $this->plugin_data ) ){
+		if ( empty( $this->plugin_data ) ){
 			
 			array_push( $this->errors, 'Can not read plugin header' );
 			return NULL;
@@ -137,16 +135,15 @@ class Fetch_Plugin_Header
 	 * 
 	 * Get a sindgle value from the plugin header
 	 * 
-	 * @param	string	$value	The value to get from the plugin header
-	 * @return	string	string	The requested value or NULL on error
+	 * @param   string  $value  The value to get from the plugin header
+	 * @return  string  string  The requested value or NULL on error
 	 */
-	public function get_value( $value = 'TextDomain' ){
+	public function get_value( $value = 'TextDomain' ) {
 		
-		if( TRUE !== $this->check_plugin_data() )
+		if ( TRUE !== $this->check_plugin_data() )
 			return NULL;
 		
 		return ( isset( $this->plugin_data[$value] ) ) ? $this->plugin_data[$value] : NULL;
-			
 	}
 	
 	/**
@@ -158,28 +155,33 @@ class Fetch_Plugin_Header
 	public function get_textdomain() {
 		
 		return $this->get_value( 'TextDomain' );
-		
 	}
 	
 	/**
 	 * Load the localization
 	 *
 	 * @since   0.1
-	 * @return	TRUE|NULL	TRUE on success, NULL on error
+	 * @return  TRUE|NULL  TRUE on success, NULL on error
 	 * @uses    load_plugin_textdomain, plugin_basename
 	 */
 	public function load_plugin_textdomain() {
 		
-		if( TRUE !== $this->check_plugin_data() )
+		if ( TRUE !== $this->check_plugin_data()
+			||
+			empty( $this->plugin_data['TextDomain'] )
+		) {
 			return NULL;
+		}
 		
-		if( ! isset( $this->plugin_data['DomainPath'] ) || empty( $this->plugin_data['DomainPath'] ) ){
+		if ( ! isset( $this->plugin_data['DomainPath'] )
+			||
+			empty( $this->plugin_data['DomainPath'] ) ) {
 			
 			array_push( $this->errors, 'DomainPath was not set' );
 			return NULL;
 			
 		} else {
-		
+			
 			return load_plugin_textdomain(
 				$this->plugin_data['TextDomain'],
 				FALSE,
@@ -189,4 +191,4 @@ class Fetch_Plugin_Header
 		}
 	}
 	
-}
+} // end class
