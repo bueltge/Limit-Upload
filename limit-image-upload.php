@@ -5,7 +5,7 @@
  * Text Domain: limit-image-upload
  * Domain Path: /languages
  * Description: Limit the number of uploads from images on posts
- * Version:     1.0.1
+ * Version:     1.0.2
  * Author:      Frank Bültge, Ralf Albert
  * Author URI:  http://bueltge.de
  * License:     GPLv3
@@ -89,22 +89,10 @@ class Init_Limit_Upload {
 	 */
 	protected function load_classes() {
 		
-		// Get dir
-		$handle = opendir( dirname( __FILE__ ) . '/classes' );
-		if ( ! $handle )
-			return;
-			
-		// Loop through directory files
-		while ( FALSE != ( $plugin = readdir( $handle ) ) ) {
-	
-			// Is this file for us?
-			if ( '.php' == substr( $plugin, -4 ) ) {
-				
-				// Include module file
-				require_once dirname( __FILE__ ) . '/classes/' . $plugin;
-			}
-		}
-		closedir( $handle );
+		// load all files with the pattern class-*.php from the directory classes
+		foreach( glob( dirname( __FILE__ ) . '/classes/class-*.php' ) as $class )
+			require_once $class;
+		
 	}
 	
 	/**
@@ -139,7 +127,7 @@ class Init_Limit_Upload {
 		new Limit_Image_Upload( $args );
 	}
 	
-} // end cass
+} // end class
 
 if ( function_exists( 'add_filter' ) && class_exists( 'Init_Limit_Upload' ) )
 	add_action( 'plugins_loaded', array( 'Init_Limit_Upload', 'get_instance' ) );

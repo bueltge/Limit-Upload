@@ -7,7 +7,7 @@
  * @category   PHP
  * @package    WordPress
  * @subpackage Limit Image Uploads
- * @author     Frank BÃ¼ltge <frank@bueltge.de>, Ralf Albert <me@neun12.de>
+ * @author     Frank Bültge <frank@bueltge.de>, Ralf Albert <me@neun12.de>
  * @license    GPLv3 http://www.gnu.org/licenses/gpl-3.0.txt
  * @version    0.2
  * @link       http://wordpress.com
@@ -29,7 +29,7 @@ class Limit_Image_Upload {
 	 * @since   0.1
 	 * @var     array
 	 */
-	 public static $post_types = array();
+	public static $post_types = array();
 	 
 	 /**
 	  * Array with allowed mime types
@@ -39,7 +39,7 @@ class Limit_Image_Upload {
 	  * @see    http://wpengineer.com/2369/restrict-mime-types-on-wordpress-media-upload/
 	  * @see    http://wpengineer.com/1668/add-file-types-for-mediathek/
 	  */
-	 static public $mime_types = array();
+	public static $mime_types = array();
 	
 	/**
 	 * The plugins textdomain
