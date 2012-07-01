@@ -7,7 +7,7 @@
  * @category   PHP
  * @package    WordPress
  * @subpackage Limit Image Uploads
- * @author     Frank BÃ¼ltge <frank@bueltge.de>, Ralf Albert <me@neun12.de>
+ * @author     Frank Bültge <frank@bueltge.de>, Ralf Albert <me@neun12.de>
  * @license    GPLv3 http://www.gnu.org/licenses/gpl-3.0.txt
  * @version    0.2
  * @link       http://wordpress.com
