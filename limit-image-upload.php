@@ -127,7 +127,7 @@ class Init_Limit_Upload {
 		new Limit_Image_Upload( $args );
 	}
 	
-} // end cass
+} // end class
 
 if ( function_exists( 'add_filter' ) && class_exists( 'Init_Limit_Upload' ) )
 	add_action( 'plugins_loaded', array( 'Init_Limit_Upload', 'get_instance' ) );
