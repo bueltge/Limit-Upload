@@ -89,22 +89,10 @@ class Init_Limit_Upload {
 	 */
 	protected function load_classes() {
 		
-		// Get dir
-		$handle = opendir( dirname( __FILE__ ) . '/classes' );
-		if ( ! $handle )
-			return;
-			
-		// Loop through directory files
-		while ( FALSE != ( $plugin = readdir( $handle ) ) ) {
-	
-			// Is this file for us?
-			if ( '.php' == substr( $plugin, -4 ) ) {
-				
-				// Include module file
-				require_once dirname( __FILE__ ) . '/classes/' . $plugin;
-			}
-		}
-		closedir( $handle );
+		// load all files with the pattern class-*.php from the directory classes
+		foreach( glob( dirname( __FILE__ ) . '/classes/class-*.php' ) as $class )
+			require_once $class;
+		
 	}
 	
 	/**
