@@ -5,7 +5,7 @@
  * Text Domain: limit-image-upload
  * Domain Path: /languages
  * Description: Limit the number of uploads from images on posts
- * Version:     1.0.1
+ * Version:     1.0.2
  * Author:      Frank Bültge, Ralf Albert
  * Author URI:  http://bueltge.de
  * License:     GPLv3
