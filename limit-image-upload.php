@@ -5,7 +5,7 @@
  * Text Domain: limit-image-upload
  * Domain Path: /languages
  * Description: Limit the number of uploads from images on posts
- * Version:     1.0.2
+ * Version:     1.0.3
  * Author:      Frank Bültge, Ralf Albert
  * Author URI:  http://bueltge.de
  * License:     GPLv3
@@ -92,7 +92,6 @@ class Init_Limit_Upload {
 		// load all files with the pattern class-*.php from the directory classes
 		foreach( glob( dirname( __FILE__ ) . '/classes/class-*.php' ) as $class )
 			require_once $class;
-		
 	}
 	
 	/**
