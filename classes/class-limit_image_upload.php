@@ -7,7 +7,7 @@
  * @category   PHP
  * @package    WordPress
  * @subpackage Limit Image Uploads
- * @author     Frank Bültge <frank@bueltge.de>, Ralf Albert <me@neun12.de>
+ * @author     Frank BÃ¼ltge <frank@bueltge.de>, Ralf Albert <me@neun12.de>
  * @license    GPLv3 http://www.gnu.org/licenses/gpl-3.0.txt
  * @version    0.2
  * @link       http://wordpress.com
@@ -118,6 +118,11 @@ class Limit_Image_Upload {
 		unset( $def_args, $args, $filters );
 	}
 	
+	public function get_textdomain() {
+		
+		return self::$textdomain;
+	}
+	
 	/**
 	 * Limit the number of uploads from images on posts
 	 * 
@@ -144,6 +149,7 @@ class Limit_Image_Upload {
 		
 		// count start with 0
 		if ( $this->get_count_attachments() > self::$limit_upload - 1 ) {
+			var_dump('true');
 			$file['error'] = sprintf( 
 				__( 'Sorry, you cannot upload more than %d images.', self::$textdomain ),
 				self::$limit_upload
@@ -162,7 +168,7 @@ class Limit_Image_Upload {
 	 */
 	public function control_media_upload_tabs( $tabs ) {
 		
-		if ( $this->get_count_attachments() >= self::$limit_upload ) {
+		if ( $this->get_count_attachments() > self::$limit_upload ) {
 			unset( $tabs['type'] );
 			unset( $tabs['type_url'] );
 		}
@@ -196,17 +202,18 @@ class Limit_Image_Upload {
 		
 		if ( ! isset( $_REQUEST['post_id'] ) )
 			return;
-			
+		
 		$post_id = intval( $_REQUEST['post_id'] );
 		
-		if ( $post_id ) {
-			// $attachments = intval( $wpdb->get_var( $wpdb->prepare( "SELECT count(*) FROM $wpdb->posts WHERE post_type = 'attachment' AND post_status != 'trash' AND post_parent = %d", $post_id ) ) );
-			$args = array(
-				'post_type'   => 'attachment',
-				'post_parent' => $post_id
-			);
-			return intval( count( get_posts( $args ) ) );
-		}
+		// @see: http://codex.wordpress.org/Template_Tags/get_posts#Show_all_attachments
+		$args = array(
+			'post_type'   => 'attachment',
+			'numberposts' => -1,
+			'post_status' => null,
+			'post_parent' => $post_id
+		);
+		
+		return count( get_posts( $args ) );
 	}
 	
 	/**
