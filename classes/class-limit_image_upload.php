@@ -149,7 +149,7 @@ class Limit_Image_Upload {
 		
 		// count start with 0
 		if ( $this->get_count_attachments() > self::$limit_upload - 1 ) {
-			var_dump('true');
+			
 			$file['error'] = sprintf( 
 				__( 'Sorry, you cannot upload more than %d images.', self::$textdomain ),
 				self::$limit_upload
