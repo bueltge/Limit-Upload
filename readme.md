@@ -17,6 +17,7 @@ Limit the number of uploads from images/attachments on posts/pages and custom po
 
 ### Usage
 Current have the plugin no settings in the backend of WordPress - a problem of time from my site.
+
 But you can simply change the values in the main file `limit-image-upload.php`. See in the method `start_limit_image_upload()` and change the values on the var `$args` for your requirements.
 
 ## Screenshots
