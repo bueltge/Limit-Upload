@@ -5,7 +5,7 @@
  * Text Domain: limit-image-upload
  * Domain Path: /languages
  * Description: Limit the number of uploads from images on posts
- * Version:     1.0.3
+ * Version:     1.0.4
  * Author:      Frank Bültge, Ralf Albert
  * Author URI:  http://bueltge.de
  * License:     GPLv3
@@ -119,7 +119,7 @@ class Init_Limit_Upload {
 				'tif'      => 'image/tiff',
 				'tiff'     => 'image/tiff',
 			),
-			'textdomain'  => $plugin_header->get_textdomain(),
+			'textdomain' => $plugin_header->get_textdomain(),
 		);
 		
 		unset( $plugin_header );
